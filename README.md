@@ -10,6 +10,7 @@ For details on the hardware and contruction process, see: TBC
 Required libraries:
 
 Adafruit Neopixels (used to run neopixel): https://github.com/adafruit/Adafruit_NeoPixel
+
 Adafruit Bluefruit LE (used to run blluefruit featherboard): https://github.com/adafruit/Adafruit_Python_BluefruitLE
 
 The "BluefruitConfig.h" header file is originally from examples provided in the Adafruit Bluefruit LE library.
