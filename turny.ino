@@ -44,7 +44,7 @@ int pot2_value = 0;
 int pot3_value = 0;
 
 uint8_t valc0, valc1, valc2, valc3;
-uint8_t valc_array[5];
+uint8_t valc_array[6];
 
 // button
 #define BUTTON_PIN 5
