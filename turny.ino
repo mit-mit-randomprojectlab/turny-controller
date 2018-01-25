@@ -51,7 +51,10 @@ uint8_t valc_array[6];
 
 // Setup neopixel
 #define LED_PIN 6
+#define NEOPIX_BRIGHTNESS1 255
+#define NEOPIX_BRIGHTNESS2 10
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, LED_PIN, NEO_GRB + NEO_KHZ800);
+int led_counter;
 
 // Light show variables
 int lshow_to = 0;
@@ -105,13 +108,14 @@ void setup(void)
 
   // Initialise neopixel
   strip.begin();
-  strip.setBrightness(255);
+  strip.setBrightness(NEOPIX_BRIGHTNESS1);
   for (int i = 0; i < 360; i+=2) {
     setPixelHue(0, i);
     strip.show();
     delay(5);
   }
   setPixelHue(0, 0);
+  strip.setBrightness(NEOPIX_BRIGHTNESS2);
   strip.show();
 
   // Initialise button
@@ -122,20 +126,19 @@ void setup(void)
   ble.factoryReset();
   ble.echo(false);
   ble.verbose(false);
+  int led_switch = 0;
   while (! ble.isConnected()) {
       setPixelHue(0, 60);
+      if (led_switch == 0) {
+        strip.setBrightness(NEOPIX_BRIGHTNESS2);
+        led_switch = 1;
+      }
+      else {
+        strip.setBrightness(1);
+        led_switch = 0;
+      }
       strip.show();
       delay(500);
-      /*for (int i = 255; i >= 0; i++) {
-        strip.setBrightness(i);
-        strip.show();
-        delay(1);
-      }
-      for (int i = 1; i < 255; i++) {
-        strip.setBrightness(i);
-        strip.show();
-        delay(1);
-      }*/
   }
 
   // Connected
@@ -148,7 +151,7 @@ void setup(void)
   ble.setMode(BLUEFRUIT_MODE_DATA);
 
   // set to connected
-  strip.setBrightness(255);
+  strip.setBrightness(NEOPIX_BRIGHTNESS2);
   setPixelHue(0, 120);
   strip.show();
   
@@ -191,15 +194,35 @@ void loop(void)
   // Check for light show
   if (lshow_to > 0) {
     setPixelHue(0, lshow_to);
+    strip.setBrightness(NEOPIX_BRIGHTNESS1);
     strip.show();
     lshow_to -= 10;
   }
   else {
     setPixelHue(0, 120);
+    strip.setBrightness(NEOPIX_BRIGHTNESS2);
+    strip.show();
+  }
+
+  // check for connection status
+  if (! ble.isConnected()) {
+    setPixelHue(0, 60);
+    led_counter++;
+    if ((led_counter % 12) == 0) {
+      strip.setBrightness(NEOPIX_BRIGHTNESS2);
+    }
+    else {
+      strip.setBrightness(1);
+    }
+    strip.show();
+  }
+  else {
+    led_counter = 0;
+    setPixelHue(0, 120);
+    strip.setBrightness(NEOPIX_BRIGHTNESS2);
     strip.show();
   }
   
   delay(40);
   
 }
-
