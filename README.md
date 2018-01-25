@@ -5,7 +5,8 @@ by mit-mit
 
 This code runs on a Adafruit Feather M0 Bluefruit LE board (Adafruit Feather M0 Bluefruit LE), an Arduino-compatible module consisting of a Cortex m0 micro-processor and low-energy bluetooth module. The controller reads the positions of four potentiometers and a single momentary button and streams this data across a bluetooth connection to a desktop/laptop computer running custom-designed games. The controller also has a single neopixel which is used to indicate bluetooth connection status and run blinky rainbow events when signalled by the connected game.
 
-For details on the hardware and contruction process, see: TBC
+For details on the hardware and contruction process, see:
+https://randomprojectlab.blogspot.com.au/2018/01/turny-alternative-bluetooth-video-game.html
 
 Required libraries:
 
